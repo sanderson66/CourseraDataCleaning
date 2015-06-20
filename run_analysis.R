@@ -1,8 +1,9 @@
 
 #
-#    This script will clean the data provided in in the data cleaning project.
+#    This script will clean the data provided in the data cleaning project and
+#       produce a tidy data set.
 #
-#       There three basic steps
+#       There are four basic steps
 #           1) Read the training data and create one training data frame
 #           2) Read the test data and create one test data frame
 #           3) Combine the two data sets, add labels and translate activity ids
@@ -97,7 +98,7 @@ columns_needed<-c("Subject", "Activity",
 tidy_dataset<-fulldataset[columns_needed]
 
 #   Write the result to a text file
-write.table(tidy_dataset, "DataCleaningProject_tidy_dataset.txt",
+write.table(tidy_dataset, "tidy_dataset.txt",
             row.names=FALSE)
 
 
