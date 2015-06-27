@@ -72,6 +72,7 @@ all_col<-c("Subject", "Activity", features_labels[,2])
 #   Apply the column names to the full data set
 colnames(fulldataset)<-all_col
 
+
 #   Read the activity lables, these will be used to translate the activity codes to text.
 activity_labels <- read.table(file="UCI HAR Dataset/activity_labels.txt",
                               col.names=c("id","text"),
@@ -91,14 +92,28 @@ for(i in 1:nrow(activity_labels)) {
 #  ignore case to be sure we get them all.
 columns_needed<-c("Subject", "Activity",
                   all_col[grep("(.*mean.*)|(*.std.*)",
-                               all_col,
-                               ignore.case=TRUE)])
+                  all_col,
+                  ignore.case=TRUE)])
 
-#   Create the smaller tidy date set
-tidy_dataset<-fulldataset[columns_needed]
+#  Create the smaller date set with just the column needed
+smaller<-fulldataset[columns_needed]
+
+# Columns used for grouping must be factors
+smaller$Subject <- as.factor(smaller$Subject)
+smaller$Activity <- as.factor(smaller$Activity)
+
+# Collapse the data set as means around subject and activity
+output_df<-aggregate(smaller[,3:86],by=smaller[c("Subject", "Activity")],
+                     FUN=mean)
+
+# sort by subject and then activity
+output_df<-output_df[with(output_df, order(Subject, Activity)), ]
+
+# show output
+output_df[1:180,1:4]
 
 #   Write the result to a text file
-write.table(tidy_dataset, "tidy_dataset.txt",
+write.table(output_df, "tidy_dataset.txt",
             row.names=FALSE)
 
 
