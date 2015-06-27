@@ -13,6 +13,7 @@ Data transformation and cleaning have been done as follwos:
  Activity identifiers where translated to activity names using the list of activities provided.
 4. The large data set was reduce to a final set containing only variables with names that include “mean” or “std”, regardless of upper or lower case. 
 This includes the mean of angular calculations.  
+5. The final data set was created by taking the data in step 4 and grouping by subject and activity and then sorting by subject and activity.
  
 For each record it is provided:
 ======================================
